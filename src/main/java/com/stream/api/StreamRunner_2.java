@@ -2,7 +2,7 @@ package com.stream.api;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.*;
 
 import com.stream.api.model.PersonInfo;
 
@@ -11,14 +11,27 @@ public class StreamRunner_2 {
 	public static void main(String[] args) {
 		List<PersonInfo> persons = populatePersons();
 		System.out.println("-----------------Obtain US & Non-US based persons using partitionBy and groupingBy ---------------------");
-		System.out.println(persons.stream().collect(Collectors.partitioningBy((PersonInfo p) -> p.getCountry().equals("India"))));
-		System.out.println(persons.stream().collect(Collectors.groupingBy((PersonInfo p)-> p.getCountry().equals("US"))));
+		System.out.println(persons.stream().collect(partitioningBy((PersonInfo p) -> p.getCountry().equals("India"))));
+		System.out.println(persons.stream().collect(groupingBy((PersonInfo p)-> p.getCountry().equals("US"))));
 	
 		System.out.println("-----------------Count US & Non-US based persons using partitionBy and groupingBy ---------------------");
-		System.out.println(persons.stream().collect(Collectors.groupingBy((PersonInfo p)->p.getCountry().equals("US"), Collectors.counting())));
-		System.out.println(persons.stream().collect(Collectors.partitioningBy((PersonInfo p)-> p.getCountry().equals("India"), Collectors.counting())));
+		System.out.println(persons.stream().collect(groupingBy((PersonInfo p)->p.getCountry().equals("US"), counting())));
+		System.out.println(persons.stream().collect(partitioningBy((PersonInfo p)-> p.getCountry().equals("India"), counting())));
 		
+		System.out.println("-----------------Obtain the persons in each country & count them using partitionBy and groupingBy ---------------------");
+		System.out.println(persons.stream().collect(groupingBy(p -> p.getCountry())));
+		System.out.println(persons.stream().collect(groupingBy(p -> p.getCountry(), counting())));
 	
+		System.out.println("-----------------Obtain US & Non-US based persons using partitionBy/groupingBy and map names to uppercase using mapping ---------------------");
+		System.out.println(persons.stream().collect(partitioningBy((PersonInfo p)-> p.getCountry().equals("US"),
+																										mapping(p->p.getName().toUpperCase(), 
+																															toList()))));
+		System.out.println(persons.stream().collect(groupingBy((PersonInfo p) -> p.getCountry().equals("US"),
+															mapping(p -> p.getName().toUpperCase(), toList()))));
+	
+		System.out.println("-----------------Obtain the persons ineach using groupingBy & map names to uppercase using mapping ---------------------");
+		System.out.println(persons.stream().collect(groupingBy((PersonInfo p)-> p.getCountry(), mapping(p->p.getName().toUpperCase(), toList()))));
+		
 	}
 	
 	private static List<PersonInfo> populatePersons(){
