@@ -4,11 +4,28 @@ public class PersonInfo {
 	
 	private String name;
 	private String country;
+	private Integer age;
+	private Integer weight;
 
 	public PersonInfo(String name, String country) {
 		super();
 		this.name = name;
 		this.country = country;
+	}
+
+	public PersonInfo(String name, String country, Integer age) {
+		super();
+		this.name = name;
+		this.country = country;
+		this.age = age;
+	}
+	
+	public PersonInfo(String name, String country, Integer age, Integer weight) {
+		super();
+		this.name = name;
+		this.country = country;
+		this.age = age;
+		this.weight = weight;
 	}
 
 	public String getName() {
@@ -19,11 +36,19 @@ public class PersonInfo {
 		return country;
 	}
 
-	@Override
-	public String toString() {
-		return getName();
+	public Integer getAge() {
+		return age;
+	}
+
+	public Integer getWeight() {
+		return weight;
 	}
 	
+	@Override
+	public String toString() {
+		return "PersonInfo [name=" + name + ", country=" + country + ", age=" + age + ", weight=" + weight + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,6 +79,5 @@ public class PersonInfo {
 			return false;
 		return true;
 	}
-
 
 }
