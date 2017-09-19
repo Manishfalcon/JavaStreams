@@ -3,18 +3,19 @@ package com.stream.api;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class MysqlConnector {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
+		Connection con = null;
 		try {
 			System.out.println("mysql Driver finding");
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("mysql Driver found");
 			System.out.println("Searching Database");
-			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "admin");
-			// here sonoo is database name, root is username and password
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "admin");
 			System.out.println("Database connected!!");
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from accounts");
@@ -24,6 +25,7 @@ public class MysqlConnector {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		con.close();
 	}
 
 }
